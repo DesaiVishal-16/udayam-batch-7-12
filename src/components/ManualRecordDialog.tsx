@@ -93,7 +93,7 @@ export default function ManualRecordDialog({ isOpen, onClose, onSave }: ManualRe
       <div className="bg-white border border-gray-200 rounded-2xl w-full max-w-lg shadow-2xl flex flex-col max-h-[90vh] overflow-hidden animate-fade-in">
         <div className="p-5 border-b border-gray-200 flex items-center justify-between bg-gray-50">
           <h3 className="text-sm font-semibold text-gray-900 flex items-center gap-1.5">
-            <PlusCircle className="w-4 h-4 text-indigo-600" />
+            <PlusCircle className="w-4 h-4 text-brand" />
             Add Manual Land Record entry (नवीन नोंद)
           </h3>
           <button
@@ -113,7 +113,7 @@ export default function ManualRecordDialog({ isOpen, onClose, onSave }: ManualRe
                 required
                 value={village}
                 onChange={(e) => setVillage(e.target.value)}
-                className="w-full p-2 text-xs bg-gray-50 border border-gray-200 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500"
+                className="w-full p-2 text-xs bg-gray-50 border border-gray-200 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-brand focus:border-brand"
                 placeholder="e.g. वाकडी"
               />
             </div>
@@ -124,7 +124,7 @@ export default function ManualRecordDialog({ isOpen, onClose, onSave }: ManualRe
                 required
                 value={taluka}
                 onChange={(e) => setTaluka(e.target.value)}
-                className="w-full p-2 text-xs bg-gray-50 border border-gray-200 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500"
+                className="w-full p-2 text-xs bg-gray-50 border border-gray-200 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-brand focus:border-brand"
                 placeholder="e.g. कोपरगाव"
               />
             </div>
@@ -135,7 +135,7 @@ export default function ManualRecordDialog({ isOpen, onClose, onSave }: ManualRe
                 required
                 value={district}
                 onChange={(e) => setDistrict(e.target.value)}
-                className="w-full p-2 text-xs bg-gray-50 border border-gray-200 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500"
+                className="w-full p-2 text-xs bg-gray-50 border border-gray-200 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-brand focus:border-brand"
                 placeholder="e.g. अहमदनगर"
               />
             </div>
@@ -148,7 +148,7 @@ export default function ManualRecordDialog({ isOpen, onClose, onSave }: ManualRe
                 type="text"
                 value={bgTenure}
                 onChange={(e) => setBgTenure(e.target.value)}
-                className="w-full p-2 text-xs bg-gray-50 border border-gray-200 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500"
+                className="w-full p-2 text-xs bg-gray-50 border border-gray-200 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-brand focus:border-brand"
                 placeholder="नवीन अविभाज्य पद्धती / भोगवटदार वर्ग"
               />
             </div>
@@ -158,7 +158,7 @@ export default function ManualRecordDialog({ isOpen, onClose, onSave }: ManualRe
                 type="text"
                 value={totalArea}
                 onChange={(e) => setTotalArea(e.target.value)}
-                className="w-full p-2 text-xs bg-gray-50 border border-gray-200 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 font-mono"
+                className="w-full p-2 text-xs bg-gray-50 border border-gray-200 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-brand focus:border-brand font-mono"
                 placeholder="e.g. २.४५ हे.आर."
               />
             </div>
@@ -170,14 +170,14 @@ export default function ManualRecordDialog({ isOpen, onClose, onSave }: ManualRe
               type="text"
               value={lastMutation}
               onChange={(e) => setLastMutation(e.target.value)}
-              className="w-full p-2 text-xs bg-gray-50 border border-gray-200 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 font-mono"
+              className="w-full p-2 text-xs bg-gray-50 border border-gray-200 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-brand focus:border-brand font-mono"
               placeholder="e.g. ४५३२"
             />
           </div>
 
           {/* YES/NO checkbox triggers */}
           <div>
-            <label className="block text-[10px] font-bold text-indigo-600 uppercase tracking-wider mb-2 border-b border-gray-200 pb-1">
+            <label className="block text-[10px] font-bold text-brand uppercase tracking-wider mb-2 border-b border-gray-200 pb-1">
               Active Legal Flags / Limitations
             </label>
             <div className="grid grid-cols-2 gap-2 max-h-[185px] overflow-y-auto pr-1">
@@ -216,7 +216,7 @@ export default function ManualRecordDialog({ isOpen, onClose, onSave }: ManualRe
             </button>
             <button
               type="submit"
-              className="py-2.5 px-5 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-xs rounded-xl shadow-md transition cursor-pointer"
+              className="py-2.5 px-5 bg-brand hover:bg-brand text-white font-semibold text-xs rounded-xl shadow-md transition cursor-pointer"
             >
               Confirm and Save Record
             </button>

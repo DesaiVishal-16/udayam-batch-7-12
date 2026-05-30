@@ -42,7 +42,7 @@ export default function AnalysisPanel({ records }: AnalysisPanelProps) {
         {/* Module Header */}
         <div className="mb-4 sm:mb-5">
           <h2 className="text-base sm:text-lg font-semibold text-gray-900 leading-tight flex items-center gap-2">
-            <LayoutGrid className="w-4 h-4 sm:w-5 sm:h-5 text-indigo-600" />
+            <LayoutGrid className="w-4 h-4 sm:w-5 sm:h-5 text-brand" />
             Land Record Intelligence
           </h2>
           <p className="text-[11px] sm:text-xs text-gray-500 mt-0.5 sm:mt-1">

@@ -223,7 +223,7 @@ export default function RecordsTable({
                 setSearchQuery(e.target.value);
                 setCurrentPage(1);
               }}
-              className="w-full pl-8 sm:pl-9 pr-3 sm:pr-4 py-1.5 sm:py-2 bg-gray-50 border border-gray-200 rounded-xl text-[11px] sm:text-xs text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500"
+              className="w-full pl-8 sm:pl-9 pr-3 sm:pr-4 py-1.5 sm:py-2 bg-gray-50 border border-gray-200 rounded-xl text-[11px] sm:text-xs text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-brand focus:border-brand"
             />
           </div>
 
@@ -263,7 +263,7 @@ export default function RecordsTable({
         <div className="flex items-center gap-2 shrink-0">
           <button
             onClick={handleExportToExcel}
-            className="bg-indigo-600 hover:bg-indigo-500 text-white py-1.5 sm:py-2 px-2.5 sm:px-4 rounded-xl font-medium text-[11px] sm:text-xs flex items-center gap-1 sm:gap-1.5 shadow-md transition duration-150 cursor-pointer"
+            className="bg-brand hover:bg-brand text-white py-1.5 sm:py-2 px-2.5 sm:px-4 rounded-xl font-medium text-[11px] sm:text-xs flex items-center gap-1 sm:gap-1.5 shadow-md transition duration-150 cursor-pointer"
             id="export-excel-btn"
           >
             <FileSpreadsheet className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
@@ -275,9 +275,9 @@ export default function RecordsTable({
 
       {/* Bulk actions banner if rows selected */}
       {selectedIds.length > 0 && (
-        <div className="p-2.5 sm:p-3 bg-indigo-50 border border-indigo-200 rounded-xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 sm:gap-4 mb-4 text-xs">
+        <div className="p-2.5 sm:p-3 bg-brand/[0.08] border border-brand/[0.2] rounded-xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 sm:gap-4 mb-4 text-xs">
           <div className="flex items-center gap-2">
-            <span className="font-semibold px-2 py-0.5 bg-indigo-100 text-indigo-700 border border-indigo-200 rounded-md">
+            <span className="font-semibold px-2 py-0.5 bg-brand/[0.15] text-brand border border-brand/[0.2] rounded-md">
               {selectedIds.length}
             </span>
             <p className="text-gray-600 text-[11px]">selected</p>
@@ -315,7 +315,7 @@ export default function RecordsTable({
                     type="checkbox"
                     checked={paginatedRecords.length > 0 && paginatedRecords.every(r => selectedIds.includes(r.id))}
                     onChange={() => handleSelectAll(paginatedRecords)}
-                    className="w-3.5 h-3.5 accent-indigo-600 cursor-pointer rounded"
+                    className="w-3.5 h-3.5 accent-brand cursor-pointer rounded"
                   />
                 </th>
 
@@ -358,7 +358,7 @@ export default function RecordsTable({
                     key={record.id} 
                     className={`hover:bg-gray-50 transition-all ${
                       record.isVerified ? "bg-emerald-50/50" : ""
-                    } ${selectedIds.includes(record.id) ? "bg-indigo-50" : ""}`}
+                    } ${selectedIds.includes(record.id) ? "bg-brand/[0.08]" : ""}`}
                   >
                     {/* Checkbox sticky */}
                     <td className="p-3 text-center sticky left-0 z-10 bg-white border-r border-gray-200">
@@ -366,7 +366,7 @@ export default function RecordsTable({
                         type="checkbox"
                         checked={selectedIds.includes(record.id)}
                         onChange={() => handleToggleSelect(record.id)}
-                        className="w-3.5 h-3.5 accent-indigo-600 cursor-pointer rounded"
+                        className="w-3.5 h-3.5 accent-brand cursor-pointer rounded"
                       />
                     </td>
 
@@ -390,7 +390,7 @@ export default function RecordsTable({
                     </td>
 
                     {/* Area holding */}
-                    <td className="p-3 font-mono font-semibold text-indigo-600 bg-gray-50 border-r border-gray-200">{record.totalArea}</td>
+                    <td className="p-3 font-mono font-semibold text-brand bg-gray-50 border-r border-gray-200">{record.totalArea}</td>
                     
                     {/* Last mutation index */}
                     <td className="p-3 font-mono text-emerald-600 font-semibold border-r border-gray-200">{record.lastMutation}</td>
@@ -438,7 +438,7 @@ export default function RecordsTable({
                         </button>
                         <button
                           onClick={() => setEditRecordId(record.id)}
-                          className="p-1.5 bg-gray-100 border border-gray-200 text-gray-500 hover:text-indigo-600 hover:bg-indigo-50 hover:border-indigo-200 rounded-md transition cursor-pointer"
+                          className="p-1.5 bg-gray-100 border border-gray-200 text-gray-500 hover:text-brand hover:bg-brand/[0.08] hover:border-brand/[0.2] rounded-md transition cursor-pointer"
                           title="Edit record"
                         >
                           <Edit3 className="w-3.5 h-3.5" />
@@ -504,7 +504,7 @@ export default function RecordsTable({
             <div className="p-6 border-b border-gray-200 flex items-center justify-between bg-gray-50">
               <div>
                 <h3 className="text-sm font-semibold text-gray-900 flex items-center gap-1.5">
-                  <Edit3 className="w-4 h-4 text-indigo-600" />
+                  <Edit3 className="w-4 h-4 text-brand" />
                   Record Sheet Editor
                 </h3>
                 <p className="text-[11px] text-gray-500 mt-1">
@@ -523,7 +523,7 @@ export default function RecordsTable({
             <div className="flex-1 overflow-y-auto p-6 space-y-5 text-gray-700">
               {/* Part 1: Land Details Geo */}
               <div>
-                <h4 className="text-[10px] font-bold uppercase tracking-wider text-indigo-600 mb-3 border-b border-gray-200 pb-1">
+                <h4 className="text-[10px] font-bold uppercase tracking-wider text-brand mb-3 border-b border-gray-200 pb-1">
                   Primary Location & Geography
                 </h4>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
@@ -533,7 +533,7 @@ export default function RecordsTable({
                       type="text"
                       value={editRecordObj.village}
                       onChange={(e) => onUpdateRecord(editRecordObj.id, { ...editRecordObj, village: e.target.value })}
-                      className="w-full p-2 text-xs bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-1 focus:ring-indigo-500 text-gray-900"
+                      className="w-full p-2 text-xs bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-1 focus:ring-brand text-gray-900"
                     />
                   </div>
                   <div>
@@ -542,7 +542,7 @@ export default function RecordsTable({
                       type="text"
                       value={editRecordObj.taluka}
                       onChange={(e) => onUpdateRecord(editRecordObj.id, { ...editRecordObj, taluka: e.target.value })}
-                      className="w-full p-2 text-xs bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-1 focus:ring-indigo-500 text-gray-900"
+                      className="w-full p-2 text-xs bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-1 focus:ring-brand text-gray-900"
                     />
                   </div>
                   <div>
@@ -551,7 +551,7 @@ export default function RecordsTable({
                       type="text"
                       value={editRecordObj.district}
                       onChange={(e) => onUpdateRecord(editRecordObj.id, { ...editRecordObj, district: e.target.value })}
-                      className="w-full p-2 text-xs bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-1 focus:ring-indigo-500 text-gray-900"
+                      className="w-full p-2 text-xs bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-1 focus:ring-brand text-gray-900"
                     />
                   </div>
                 </div>
@@ -559,7 +559,7 @@ export default function RecordsTable({
 
               {/* Part 2: Tenure Assessment info */}
               <div>
-                <h4 className="text-[10px] font-bold uppercase tracking-wider text-indigo-600 mb-3 border-b border-gray-200 pb-1">
+                <h4 className="text-[10px] font-bold uppercase tracking-wider text-brand mb-3 border-b border-gray-200 pb-1">
                   Tenure, Area & Mutation
                 </h4>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
@@ -569,7 +569,7 @@ export default function RecordsTable({
                       type="text"
                       value={editRecordObj.bgTenure}
                       onChange={(e) => onUpdateRecord(editRecordObj.id, { ...editRecordObj, bgTenure: e.target.value })}
-                      className="w-full p-2 text-xs bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-1 focus:ring-indigo-500 text-gray-900"
+                      className="w-full p-2 text-xs bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-1 focus:ring-brand text-gray-900"
                     />
                   </div>
                   <div>
@@ -578,7 +578,7 @@ export default function RecordsTable({
                       type="text"
                       value={editRecordObj.totalArea}
                       onChange={(e) => onUpdateRecord(editRecordObj.id, { ...editRecordObj, totalArea: e.target.value })}
-                      className="w-full p-2 text-xs bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-1 focus:ring-indigo-500 text-gray-900 font-mono"
+                      className="w-full p-2 text-xs bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-1 focus:ring-brand text-gray-900 font-mono"
                     />
                   </div>
                   <div>
@@ -587,7 +587,7 @@ export default function RecordsTable({
                       type="text"
                       value={editRecordObj.lastMutation}
                       onChange={(e) => onUpdateRecord(editRecordObj.id, { ...editRecordObj, lastMutation: e.target.value })}
-                      className="w-full p-2 text-xs bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-1 focus:ring-indigo-500 text-gray-900 font-mono"
+                      className="w-full p-2 text-xs bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-1 focus:ring-brand text-gray-900 font-mono"
                     />
                   </div>
                   <div>
@@ -596,7 +596,7 @@ export default function RecordsTable({
                       type="date"
                       value={editRecordObj.date}
                       onChange={(e) => onUpdateRecord(editRecordObj.id, { ...editRecordObj, date: e.target.value })}
-                      className="w-full p-2 text-xs bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-1 focus:ring-indigo-500 text-gray-900 font-mono"
+                      className="w-full p-2 text-xs bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-1 focus:ring-brand text-gray-900 font-mono"
                     />
                   </div>
                   <div>
@@ -615,7 +615,7 @@ export default function RecordsTable({
 
               {/* Part 3: Yes/No restrictions checkbox group */}
               <div>
-                <h4 className="text-[10px] font-bold uppercase tracking-wider text-indigo-600 mb-3 border-b border-gray-200 pb-1">
+                <h4 className="text-[10px] font-bold uppercase tracking-wider text-brand mb-3 border-b border-gray-200 pb-1">
                   Conditions & Legal Keywords
                 </h4>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 max-h-[300px] overflow-y-auto pr-1">
@@ -645,7 +645,7 @@ export default function RecordsTable({
             <div className="p-5 border-t border-gray-200 bg-gray-50 text-right">
               <button
                 onClick={() => setEditRecordId(null)}
-                className="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-xs rounded-xl shadow-md transition duration-150 cursor-pointer"
+                className="px-5 py-2.5 bg-brand hover:bg-brand text-white font-semibold text-xs rounded-xl shadow-md transition duration-150 cursor-pointer"
               >
                 Close and Save Changes
               </button>

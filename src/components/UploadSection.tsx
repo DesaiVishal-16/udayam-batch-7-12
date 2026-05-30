@@ -314,9 +314,9 @@ export default function UploadSection({ onRecordsExtracted, apiConnected }: Uplo
     <div className="bg-white border border-gray-200 rounded-2xl p-4 sm:p-6 shadow-sm h-full flex flex-col" id="upload-panel">
       <div className="mb-3 sm:mb-4">
         <h2 className="text-base sm:text-lg font-semibold text-gray-900 leading-tight flex items-center gap-2">
-          <Upload className="w-4 h-4 sm:w-5 sm:h-5 text-indigo-600" />
+          <Upload className="w-4 h-4 sm:w-5 sm:h-5 text-brand" />
           Upload Documents
-          <span className="text-[9px] font-medium text-indigo-600 bg-indigo-50 border border-indigo-200 px-1.5 py-0.5 rounded-full ml-auto">BATCH</span>
+          <span className="text-[9px] font-medium text-brand bg-brand/[0.08] border border-brand/[0.2] px-1.5 py-0.5 rounded-full ml-auto">BATCH</span>
         </h2>
         <p className="text-[11px] sm:text-xs text-gray-500 mt-0.5 sm:mt-1">
           Upload scanned 7/12 extracts (PDF, JPG, PNG).
@@ -330,7 +330,7 @@ export default function UploadSection({ onRecordsExtracted, apiConnected }: Uplo
         onClick={() => fileInputRef.current?.click()}
         className={`border-2 border-dashed rounded-xl p-5 sm:p-8 sm:py-10 text-center cursor-pointer transition-all duration-300 flex flex-col items-center justify-center ${
           isDragging
-            ? "border-indigo-500 bg-indigo-50"
+            ? "border-brand bg-brand/[0.08]"
             : "border-gray-300 hover:border-gray-400 bg-gray-50/80"
         }`}
         id="drag-drop-zone"
@@ -343,7 +343,7 @@ export default function UploadSection({ onRecordsExtracted, apiConnected }: Uplo
           multiple
           accept=".pdf,.png,.jpg,.jpeg"
         />
-        <div className="p-3 bg-gray-100 rounded-xl shadow-sm border border-gray-200 mb-3 text-indigo-500">
+        <div className="p-3 bg-gray-100 rounded-xl shadow-sm border border-gray-200 mb-3 text-brand">
           <Upload className="w-6 h-6 animate-pulse" />
         </div>
         <p className="font-medium text-xs text-gray-700">
@@ -365,20 +365,20 @@ export default function UploadSection({ onRecordsExtracted, apiConnected }: Uplo
 
       {/* Batch Job Progress */}
       {batchJob && (
-        <div className="mt-4 p-3 bg-indigo-50 border border-indigo-200 rounded-xl">
+        <div className="mt-4 p-3 bg-brand/[0.08] border border-brand/[0.2] rounded-xl">
           <div className="flex items-center justify-between mb-2">
-            <span className="text-xs font-semibold text-indigo-700">Batch Job</span>
+            <span className="text-xs font-semibold text-brand">Batch Job</span>
             <span className={`text-[10px] px-2 py-0.5 rounded-full font-medium ${
               batchJob.status === "completed" ? "bg-emerald-100 text-emerald-700"
                 : batchJob.status === "failed" ? "bg-rose-100 text-rose-700"
-                : "bg-indigo-100 text-indigo-700"
+                : "bg-brand/[0.15] text-brand"
             }`}>
               {batchJob.status}
             </span>
           </div>
-          <div className="w-full bg-indigo-200 rounded-full h-2">
+          <div className="w-full bg-brand/[0.2] rounded-full h-2">
             <div
-              className="h-full bg-indigo-600 rounded-full transition-all duration-500"
+              className="h-full bg-brand rounded-full transition-all duration-500"
               style={{
                 width: `${batchJob.totalFiles > 0
                   ? ((batchJob.completedFiles + batchJob.failedFiles) / batchJob.totalFiles) * 100
@@ -386,7 +386,7 @@ export default function UploadSection({ onRecordsExtracted, apiConnected }: Uplo
               }}
             />
           </div>
-          <p className="text-[10px] text-indigo-600 mt-1.5">
+          <p className="text-[10px] text-brand mt-1.5">
             {batchJob.completedFiles}/{batchJob.totalFiles} completed
             {batchJob.failedFiles > 0 && ` (${batchJob.failedFiles} failed)`}
           </p>
@@ -410,7 +410,7 @@ export default function UploadSection({ onRecordsExtracted, apiConnected }: Uplo
 
           <div className="p-3 bg-gray-50 border border-gray-200 rounded-xl">
             <div className="flex items-center gap-3">
-              <FileText className="w-5 h-5 text-indigo-500 shrink-0" />
+              <FileText className="w-5 h-5 text-brand shrink-0" />
               <div>
                 <p className="text-xs font-semibold text-gray-700">
                   {selectedFiles.length} document{selectedFiles.length !== 1 ? "s" : ""} selected
@@ -421,7 +421,7 @@ export default function UploadSection({ onRecordsExtracted, apiConnected }: Uplo
               </div>
             </div>
             {isProcessingAll && (
-              <div className="mt-2 flex items-center gap-1.5 text-[10px] text-indigo-600">
+              <div className="mt-2 flex items-center gap-1.5 text-[10px] text-brand">
                 <Loader2 className="w-3 h-3 animate-spin" />
                 Processing {selectedFiles.filter(f => f.status === "completed" || f.status === "failed").length}/{selectedFiles.length}...
               </div>
@@ -430,8 +430,8 @@ export default function UploadSection({ onRecordsExtracted, apiConnected }: Uplo
 
           <div className="mt-5 border-t border-gray-200 pt-4 flex flex-col gap-3">
             {isProcessingAll && currentStepText && (
-              <div className="flex items-center gap-2 text-[11px] text-indigo-700 font-medium bg-indigo-50 p-2.5 rounded-lg border border-indigo-200">
-                <Loader2 className="w-3.5 h-3.5 animate-spin text-indigo-500 shrink-0" />
+              <div className="flex items-center gap-2 text-[11px] text-brand font-medium bg-brand/[0.08] p-2.5 rounded-lg border border-brand/[0.2]">
+                <Loader2 className="w-3.5 h-3.5 animate-spin text-brand shrink-0" />
                 <span>{currentStepText}</span>
               </div>
             )}
@@ -445,7 +445,7 @@ export default function UploadSection({ onRecordsExtracted, apiConnected }: Uplo
             <button
               onClick={handleProcessActiveQueue}
               disabled={isProcessingAll || selectedFiles.every((f) => f.status === "completed")}
-              className="w-full bg-indigo-600 hover:bg-indigo-500 text-white py-2.5 px-4 rounded-xl font-medium text-xs shadow-md transition-all duration-200 disabled:opacity-60 disabled:shadow-none flex items-center justify-center gap-1.5 cursor-pointer"
+              className="w-full bg-brand hover:bg-brand text-white py-2.5 px-4 rounded-xl font-medium text-xs shadow-md transition-all duration-200 disabled:opacity-60 disabled:shadow-none flex items-center justify-center gap-1.5 cursor-pointer"
               id="process-queue-button"
             >
               {isProcessingAll ? (

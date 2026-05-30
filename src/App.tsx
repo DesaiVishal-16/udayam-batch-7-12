@@ -119,7 +119,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-white text-gray-700 font-sans selection:bg-indigo-100 selection:text-indigo-700 antialiased flex" id="applet-container">
+    <div className="min-h-screen bg-white text-gray-700 font-sans selection:bg-brand/[0.15] selection:text-brand antialiased flex" id="applet-container">
       
       {/* Sidebar — hidden on mobile */}
       <aside className={`${sidebarCollapsed ? "w-16" : "w-60"} shrink-0 bg-white border-r border-gray-200 hidden lg:flex flex-col h-screen sticky top-0 transition-all duration-200`} id="sidebar">
@@ -144,7 +144,7 @@ export default function App() {
             onClick={() => setActiveTab("dashboard")}
             className={`w-full flex items-center ${sidebarCollapsed ? "justify-center" : "gap-3"} px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-150 cursor-pointer ${
               activeTab === "dashboard"
-                ? "bg-indigo-50 text-indigo-700"
+                ? "bg-brand/[0.08] text-brand"
                 : "text-gray-600 hover:bg-gray-100 hover:text-gray-900"
             }`}
             title={sidebarCollapsed ? "Dashboard" : undefined}
@@ -157,7 +157,7 @@ export default function App() {
             onClick={() => setActiveTab("history")}
             className={`w-full flex items-center ${sidebarCollapsed ? "justify-center" : "gap-3"} px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-150 cursor-pointer ${
               activeTab === "history"
-                ? "bg-indigo-50 text-indigo-700"
+                ? "bg-brand/[0.08] text-brand"
                 : "text-gray-600 hover:bg-gray-100 hover:text-gray-900"
             }`}
             title={sidebarCollapsed ? "History" : undefined}
@@ -194,7 +194,7 @@ export default function App() {
               onClick={() => setActiveTab("dashboard")}
               className={`px-2.5 py-1.5 rounded-lg text-xs font-medium transition cursor-pointer ${
                 activeTab === "dashboard"
-                  ? "bg-indigo-50 text-indigo-700"
+                  ? "bg-brand/[0.08] text-brand"
                   : "text-gray-500 hover:bg-gray-100"
               }`}
             >
@@ -204,7 +204,7 @@ export default function App() {
               onClick={() => setActiveTab("history")}
               className={`px-2.5 py-1.5 rounded-lg text-xs font-medium transition cursor-pointer ${
                 activeTab === "history"
-                  ? "bg-indigo-50 text-indigo-700"
+                  ? "bg-brand/[0.08] text-brand"
                   : "text-gray-500 hover:bg-gray-100"
               }`}
             >
@@ -218,11 +218,11 @@ export default function App() {
             {/* Dashboard Header */}
             <header className="border border-gray-200 bg-white rounded-2xl p-3 sm:p-5 shadow-sm flex items-center justify-between" id="dashboard-header">
               <h1 className="text-sm sm:text-xl md:text-2xl font-bold text-gray-900 tracking-tight flex items-center gap-1.5 sm:gap-2">
-                <LayoutDashboard className="w-4 h-4 sm:w-6 sm:h-6 text-indigo-600" />
+                <LayoutDashboard className="w-4 h-4 sm:w-6 sm:h-6 text-brand" />
                 <span className="hidden sm:inline">Dashboard</span>
                 <span className="text-gray-300 font-light hidden sm:inline text-xl md:text-2xl">-</span>
                 <span className="text-xs sm:text-base md:text-lg font-bold text-gray-900">7/12 Smart Scan</span>
-                <span className="text-[10px] sm:text-xs font-medium text-indigo-600 bg-indigo-50 border border-indigo-200 px-2 py-0.5 rounded-full">Batch Mode</span>
+                <span className="text-[10px] sm:text-xs font-medium text-brand bg-brand/[0.08] border border-brand/[0.2] px-2 py-0.5 rounded-full">Batch Mode</span>
               </h1>
               <div className="hidden sm:flex items-center gap-2 bg-gray-100 border border-gray-200 rounded-xl px-3 py-1.5">
                 <Globe className="w-3.5 h-3.5 text-gray-400" />
@@ -265,7 +265,7 @@ export default function App() {
               <p>© 2026 Udayam AI Labs. All rights reserved.</p>
               <p>
                 Powered by{" "}
-                <a href="https://udayam.co.in" target="_blank" rel="noopener noreferrer" className="text-indigo-600 hover:text-indigo-500 font-medium">
+                <a href="https://udayam.co.in" target="_blank" rel="noopener noreferrer" className="text-brand hover:text-brand font-medium">
                   Udayam AI Labs
                 </a>
               </p>
@@ -276,7 +276,7 @@ export default function App() {
             {/* History Header */}
             <header className="border border-gray-200 bg-white rounded-2xl p-4 sm:p-5 shadow-sm flex items-center justify-between" id="history-header">
               <h1 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-900 tracking-tight flex items-center gap-2">
-                <History className="w-5 h-5 sm:w-6 sm:h-6 text-indigo-600" />
+                <History className="w-5 h-5 sm:w-6 sm:h-6 text-brand" />
                 History
               </h1>
               <div className="flex items-center gap-2 bg-gray-100 border border-gray-200 rounded-xl px-3 py-1.5">
@@ -298,7 +298,7 @@ export default function App() {
               <p>© 2026 Udayam AI Labs. All rights reserved.</p>
               <p>
                 Powered by{" "}
-                <a href="https://udayam.co.in" target="_blank" rel="noopener noreferrer" className="text-indigo-600 hover:text-indigo-500 font-medium">
+                <a href="https://udayam.co.in" target="_blank" rel="noopener noreferrer" className="text-brand hover:text-brand font-medium">
                   Udayam AI Labs
                 </a>
               </p>
