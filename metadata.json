@@ -1,0 +1,6 @@
+{
+  "name": "Maharashtra 7/12 Land Record Extractor",
+  "description": "High-accuracy extraction from Maharashtra 7/12 land records using forensic AI OCR and text parsing.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

@@ -1,0 +1,6 @@
+node_modules/
+dist/
+.env
+gen-lang-client-*.json
+*.log
+.DS_Store
