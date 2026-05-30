@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { PlusCircle } from "lucide-react";
 import { LandRecord, COLUMN_KEYS } from "../types";
+import AlertModal from "./AlertModal";
 
 interface ManualRecordDialogProps {
   isOpen: boolean;
@@ -9,6 +10,7 @@ interface ManualRecordDialogProps {
 }
 
 export default function ManualRecordDialog({ isOpen, onClose, onSave }: ManualRecordDialogProps) {
+  const [alertMessage, setAlertMessage] = useState<string | null>(null);
   const [village, setVillage] = useState("");
   const [taluka, setTaluka] = useState("");
   const [district, setDistrict] = useState("");
@@ -55,7 +57,7 @@ export default function ManualRecordDialog({ isOpen, onClose, onSave }: ManualRe
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!village || !taluka || !district) {
-      alert("Please fill in गाव, तालुका, and जिल्हा fields.");
+      setAlertMessage("Please fill in गाव, तालुका, and जिल्हा fields.");
       return;
     }
 
@@ -221,6 +223,9 @@ export default function ManualRecordDialog({ isOpen, onClose, onSave }: ManualRe
           </div>
         </form>
       </div>
+      {alertMessage && (
+        <AlertModal message={alertMessage} onClose={() => setAlertMessage(null)} />
+      )}
     </div>
   );
 }

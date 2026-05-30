@@ -17,6 +17,7 @@ import {
 } from "lucide-react";
 import * as XLSX from "xlsx";
 import { LandRecord, COLUMN_KEYS, LandRecordFieldName } from "../types";
+import AlertModal from "./AlertModal";
 
 interface RecordsTableProps {
   records: LandRecord[];
@@ -36,6 +37,7 @@ export default function RecordsTable({
   const [filterLegalFlag, setFilterLegalFlag] = useState("all");
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const [editRecordId, setEditRecordId] = useState<string | null>(null);
+  const [alertMessage, setAlertMessage] = useState<string | null>(null);
 
   // Pagination states
   const [currentPage, setCurrentPage] = useState(1);
@@ -85,7 +87,7 @@ export default function RecordsTable({
     if (record.gcsInputPath) {
       window.open(`/api/file?path=${encodeURIComponent(record.gcsInputPath)}`, "_blank");
     } else {
-      alert("No file associated with this record.");
+      setAlertMessage("No file associated with this record.");
     }
   };
 
@@ -129,7 +131,7 @@ export default function RecordsTable({
   // SheetJS Excel Exporter implementation with column sizing
   const handleExportToExcel = () => {
     if (records.length === 0) {
-      alert("No data records available to export.");
+      setAlertMessage("No data records available to export.");
       return;
     }
 
@@ -643,7 +645,9 @@ export default function RecordsTable({
           </div>
         </div>
       )}
-
+      {alertMessage && (
+        <AlertModal message={alertMessage} onClose={() => setAlertMessage(null)} />
+      )}
 
     </div>
   );
