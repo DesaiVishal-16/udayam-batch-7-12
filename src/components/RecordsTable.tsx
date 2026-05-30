@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState } from "react";
 import { 
   FileSpreadsheet, 
   Search, 
@@ -36,8 +36,6 @@ export default function RecordsTable({
   const [filterLegalFlag, setFilterLegalFlag] = useState("all");
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const [editRecordId, setEditRecordId] = useState<string | null>(null);
-  const [filePreview, setFilePreview] = useState<{ dataUri: string; fileType: string; fileName: string } | null>(null);
-  const [fileLoading, setFileLoading] = useState(false);
 
   // Pagination states
   const [currentPage, setCurrentPage] = useState(1);
@@ -82,30 +80,14 @@ export default function RecordsTable({
     }
   };
 
-  // View file — fetch from GCS via backend
-  const handleViewFile = useCallback(async (record: LandRecord) => {
+  // View file — open in new tab via backend proxy
+  const handleViewFile = (record: LandRecord) => {
     if (record.gcsInputPath) {
-      setFileLoading(true);
-      try {
-        const res = await fetch(`/api/file?path=${encodeURIComponent(record.gcsInputPath)}`);
-        if (!res.ok) throw new Error("Failed to fetch file");
-        const blob = await res.blob();
-        const dataUri = await new Promise<string>((resolve) => {
-          const reader = new FileReader();
-          reader.onload = () => resolve(reader.result as string);
-          reader.readAsDataURL(blob);
-        });
-        setFilePreview({ dataUri, fileType: record.fileType || blob.type, fileName: record.fileName });
-      } catch (err) {
-        console.error("Failed to load file:", err);
-        alert("Failed to load file from storage.");
-      } finally {
-        setFileLoading(false);
-      }
+      window.open(`/api/file?path=${encodeURIComponent(record.gcsInputPath)}`, "_blank");
     } else {
       alert("No file associated with this record.");
     }
-  }, []);
+  };
 
   // In-table YES/NO badge togglers
   const handleToggleYesNo = (id: string, field: LandRecordFieldName) => {
@@ -662,50 +644,7 @@ export default function RecordsTable({
         </div>
       )}
 
-      {/* File Preview Modal */}
-      {filePreview && (
-        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4" id="file-preview-overlay">
-          <div className="bg-white rounded-2xl w-full max-w-4xl max-h-[90vh] flex flex-col shadow-2xl overflow-hidden animate-fade-in">
-            <div className="p-4 border-b border-gray-200 flex items-center justify-between bg-gray-50">
-              <h3 className="text-sm font-semibold text-gray-900 flex items-center gap-2">
-                <FileText className="w-4 h-4 text-indigo-600" />
-                {filePreview.fileName}
-              </h3>
-              <button
-                onClick={() => setFilePreview(null)}
-                className="p-1.5 text-gray-400 hover:text-gray-600 hover:bg-gray-200 rounded-lg transition cursor-pointer"
-              >
-                <X className="w-5 h-5" />
-              </button>
-            </div>
-            <div className="flex-1 overflow-auto bg-gray-100 p-4 flex items-center justify-center">
-              {filePreview.fileType?.startsWith("image/") ? (
-                <img
-                  src={filePreview.dataUri}
-                  alt={filePreview.fileName}
-                  className="max-w-full max-h-[70vh] object-contain rounded-lg shadow-md"
-                />
-              ) : (
-                <iframe
-                  src={filePreview.dataUri}
-                  className="w-full h-[70vh] rounded-lg shadow-md bg-white"
-                  title={filePreview.fileName}
-                />
-              )}
-            </div>
-          </div>
-        </div>
-      )}
 
-      {/* File loading overlay */}
-      {fileLoading && (
-        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-2xl p-8 flex flex-col items-center gap-3 shadow-2xl">
-            <div className="w-8 h-8 border-3 border-indigo-600 border-t-transparent rounded-full animate-spin" />
-            <p className="text-sm text-gray-600 font-medium">Loading file...</p>
-          </div>
-        </div>
-      )}
     </div>
   );
 }
