@@ -223,7 +223,7 @@ export default function UploadSection({ onRecordsExtracted, apiConnected }: Uplo
     }
   };
 
-  const parseRowToLandRecord = (row: any[], fileName: string): LandRecord => {
+  const parseRowToLandRecord = (row: any[], fileName: string, gcsInputPath?: string, fileType?: string): LandRecord => {
     const getVal = (idx: number, fallback: string = ""): string => {
       return (row && row[idx] !== undefined) ? String(row[idx]).trim() : fallback;
     };
@@ -267,6 +267,8 @@ export default function UploadSection({ onRecordsExtracted, apiConnected }: Uplo
       cultivation: getYesNo(30),
       isVerified: false,
       confidenceScore: Math.floor(Math.random() * 15) + 81,
+      gcsInputPath,
+      fileType: fileType || "application/pdf",
     };
   };
 
@@ -287,7 +289,7 @@ export default function UploadSection({ onRecordsExtracted, apiConnected }: Uplo
         if (!tableObj || !tableObj.rows) continue;
 
         for (const row of tableObj.rows) {
-          records.push(parseRowToLandRecord(row, item.fileName));
+          records.push(parseRowToLandRecord(row, item.fileName, item.gcsInputPath, item.fileType));
         }
         fetchedFilesRef.current.add(item.fileName);
       }

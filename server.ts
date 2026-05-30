@@ -699,8 +699,15 @@ app.get("/api/batch/:jobId/results", async (req: Request, res: Response) => {
             if (!rawResponseText) continue;
             const cleanJsonString = rawResponseText.replace(/```json|```/g, "").trim();
             const extractedFields = JSON.parse(cleanJsonString);
+            const ext = file.fileName.split(".").pop()?.toLowerCase();
+            let fileType = "application/pdf";
+            if (ext === "png") fileType = "image/png";
+            else if (ext === "jpg" || ext === "jpeg") fileType = "image/jpeg";
+
             aggregatedResults.push({
               fileName: file.fileName,
+              gcsInputPath: file.gcsInputPath,
+              fileType,
               extraction: extractedFields,
             });
           }
@@ -726,6 +733,29 @@ app.get("/api/batch/jobs", (_req: Request, res: Response) => {
     completedAt: j.completedAt,
   }));
   res.json({ jobs });
+});
+
+app.get("/api/file", async (req: Request, res: Response) => {
+  try {
+    const filePath = req.query.path as string;
+    if (!filePath) {
+      return res.status(400).json({ error: "Missing 'path' query parameter" });
+    }
+
+    const buffer = await downloadFromGCS(filePath);
+    const ext = filePath.split(".").pop()?.toLowerCase();
+    let contentType = "application/octet-stream";
+    if (ext === "pdf") contentType = "application/pdf";
+    else if (ext === "png") contentType = "image/png";
+    else if (ext === "jpg" || ext === "jpeg") contentType = "image/jpeg";
+
+    res.setHeader("Content-Type", contentType);
+    res.setHeader("Content-Disposition", `inline; filename="${filePath.split("/").pop()}"`);
+    res.send(buffer);
+  } catch (err: any) {
+    logger.error({ err }, "File fetch error");
+    res.status(500).json({ error: err.message });
+  }
 });
 
 app.get("/api/batch/:jobId/download/:fileName", async (req: Request, res: Response) => {

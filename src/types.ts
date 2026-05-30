@@ -38,7 +38,7 @@ export interface LandRecord {
   isVerified: boolean;
   notes?: string;
   confidenceScore?: number; // Simulated AI extraction confidence based on matches
-  fileData?: string; // Base64 file data for viewing
+  gcsInputPath?: string; // GCS path to the original uploaded file
   fileType?: string; // MIME type of the file
 }
 
