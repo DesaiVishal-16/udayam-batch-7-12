@@ -18,6 +18,7 @@ import {
 import * as XLSX from "xlsx";
 import { LandRecord, COLUMN_KEYS, LandRecordFieldName } from "../types";
 import AlertModal from "./AlertModal";
+import ConfirmModal from "./ConfirmModal";
 
 interface RecordsTableProps {
   records: LandRecord[];
@@ -38,6 +39,7 @@ export default function RecordsTable({
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const [editRecordId, setEditRecordId] = useState<string | null>(null);
   const [alertMessage, setAlertMessage] = useState<string | null>(null);
+  const [confirmAction, setConfirmAction] = useState<{ message: string; onConfirm: () => void } | null>(null);
 
   // Pagination states
   const [currentPage, setCurrentPage] = useState(1);
@@ -76,10 +78,14 @@ export default function RecordsTable({
   // Bulk delete action
   const handleBulkDelete = () => {
     if (selectedIds.length === 0) return;
-    if (confirm(`Are you sure you want to delete the ${selectedIds.length} selected land record entries?`)) {
-      onDeleteRecords(selectedIds);
-      setSelectedIds([]);
-    }
+    setConfirmAction({
+      message: `Are you sure you want to delete the ${selectedIds.length} selected land record entries?`,
+      onConfirm: () => {
+        onDeleteRecords(selectedIds);
+        setSelectedIds([]);
+        setConfirmAction(null);
+      },
+    });
   };
 
   // View file — open in new tab via backend proxy
@@ -438,11 +444,13 @@ export default function RecordsTable({
                           <Edit3 className="w-3.5 h-3.5" />
                         </button>
                         <button
-                          onClick={() => {
-                            if (confirm("Are you sure you want to delete this single entry?")) {
+                          onClick={() => setConfirmAction({
+                            message: "Are you sure you want to delete this single entry?",
+                            onConfirm: () => {
                               onDeleteRecords([record.id]);
-                            }
-                          }}
+                              setConfirmAction(null);
+                            },
+                          })}
                           className="p-1.5 text-gray-400 hover:text-rose-600 hover:bg-rose-50 rounded-md transition cursor-pointer"
                           title="Delete row"
                         >
@@ -647,6 +655,13 @@ export default function RecordsTable({
       )}
       {alertMessage && (
         <AlertModal message={alertMessage} onClose={() => setAlertMessage(null)} />
+      )}
+      {confirmAction && (
+        <ConfirmModal
+          message={confirmAction.message}
+          onConfirm={confirmAction.onConfirm}
+          onCancel={() => setConfirmAction(null)}
+        />
       )}
 
     </div>
