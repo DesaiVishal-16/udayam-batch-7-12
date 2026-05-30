@@ -417,7 +417,7 @@ export default function RecordsTable({
                             className={`px-2.5 py-1 text-[10px] font-bold rounded-full transition-all duration-150 cursor-pointer select-none ${
                               value === "YES" 
                                 ? "bg-red-50 text-red-600 hover:bg-red-100 border border-red-200" 
-                                : "bg-gray-100 text-gray-500 hover:bg-gray-200 hover:text-gray-600"
+                                : "bg-emerald-50 text-emerald-600 hover:bg-emerald-100 border border-emerald-200"
                             }`}
                           >
                             {value}
@@ -628,7 +628,7 @@ export default function RecordsTable({
                           value={value}
                           onChange={(e) => onUpdateRecord(editRecordObj.id, { ...editRecordObj, [col.field]: e.target.value })}
                           className={`text-[10px] font-bold p-1 rounded-md text-center focus:outline-none cursor-pointer ${
-                            value === "YES" ? "bg-red-50 text-red-600 border border-red-200" : "bg-gray-100 text-gray-500"
+                            value === "YES" ? "bg-red-50 text-red-600 border border-red-200" : "bg-emerald-50 text-emerald-600 border border-emerald-200"
                           }`}
                         >
                           <option value="YES">YES</option>

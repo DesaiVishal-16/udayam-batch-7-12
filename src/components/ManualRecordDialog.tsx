@@ -191,12 +191,12 @@ export default function ManualRecordDialog({ isOpen, onClose, onSave }: ManualRe
                     className={`p-2 rounded-lg border text-[11px] font-semibold text-left transition-all duration-150 flex items-center justify-between cursor-pointer ${
                       isActive
                         ? "bg-red-50 text-red-600 border-red-200"
-                        : "bg-gray-50 text-gray-500 border-gray-200 hover:border-gray-300"
+                        : "bg-emerald-50 text-emerald-600 border-emerald-200 hover:border-emerald-300"
                     }`}
                   >
                     <span className="truncate">{col.label}</span>
                     <span className={`text-[9px] px-1.5 py-0.5 rounded-md font-bold uppercase font-mono ${
-                      isActive ? "bg-red-100 text-red-600 border border-red-200" : "bg-gray-100 text-gray-500"
+                      isActive ? "bg-red-100 text-red-600 border border-red-200" : "bg-emerald-100 text-emerald-600 border border-emerald-200"
                     }`}>
                       {flags[col.field]}
                     </span>
