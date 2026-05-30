@@ -1,14 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { 
-  FileSpreadsheet, 
-  Upload, 
-  CheckCircle, 
-  HelpCircle, 
-  Activity, 
-  Lock, 
-  Coins, 
-  TrendingUp, 
-  Server,
   Globe,
   LayoutDashboard,
   History,
@@ -22,7 +13,8 @@ import RecordsTable from "./components/RecordsTable";
 import ManualRecordDialog from "./components/ManualRecordDialog";
 
 export default function App() {
-  const [records, setRecords] = useState<LandRecord[]>([]);
+  const [dashboardRecords, setDashboardRecords] = useState<LandRecord[]>([]);
+  const [historyRecords, setHistoryRecords] = useState<LandRecord[]>([]);
   const [apiConnected, setApiConnected] = useState(false);
   const [isManualOpen, setIsManualOpen] = useState(false);
   const [activeTab, setActiveTab] = useState<"dashboard" | "history">("dashboard");
@@ -41,12 +33,21 @@ export default function App() {
 
   // Load per-browser data from localStorage on startup
   useEffect(() => {
-    const cached = localStorage.getItem("maharashtra_7_12_extracted_records");
-    if (cached) {
+    const cachedDashboard = localStorage.getItem("maharashtra_7_12_dashboard_records");
+    if (cachedDashboard) {
       try {
-        setRecords(JSON.parse(cached));
+        setDashboardRecords(JSON.parse(cachedDashboard));
       } catch (err) {
-        console.error("Failed to parse cached 7_12 records:", err);
+        console.error("Failed to parse cached dashboard records:", err);
+      }
+    }
+
+    const cachedHistory = localStorage.getItem("maharashtra_7_12_history_records");
+    if (cachedHistory) {
+      try {
+        setHistoryRecords(JSON.parse(cachedHistory));
+      } catch (err) {
+        console.error("Failed to parse cached history records:", err);
       }
     }
 
@@ -61,36 +62,60 @@ export default function App() {
       .catch((err) => console.log("Host connection is offline, running local server fallbacks: ", err));
   }, []);
 
-  // Sync cache changes
-  const updateCache = (newRecords: LandRecord[]) => {
-    setRecords(newRecords);
-    localStorage.setItem("maharashtra_7_12_extracted_records", JSON.stringify(newRecords));
+  // Sync dashboard cache
+  const updateDashboardCache = (newRecords: LandRecord[]) => {
+    setDashboardRecords(newRecords);
+    localStorage.setItem("maharashtra_7_12_dashboard_records", JSON.stringify(newRecords));
+  };
+
+  // Sync history cache
+  const updateHistoryCache = (newRecords: LandRecord[]) => {
+    setHistoryRecords(newRecords);
+    localStorage.setItem("maharashtra_7_12_history_records", JSON.stringify(newRecords));
   };
 
   // Callback: records extracted from UploadSection
   const handleRecordsExtracted = (newExtracted: LandRecord[]) => {
-    setRecords(prev => {
+    setDashboardRecords(prev => {
       const updated = [...newExtracted, ...prev];
-      localStorage.setItem("maharashtra_7_12_extracted_records", JSON.stringify(updated));
+      localStorage.setItem("maharashtra_7_12_dashboard_records", JSON.stringify(updated));
+      return updated;
+    });
+    setHistoryRecords(prev => {
+      const updated = [...newExtracted, ...prev];
+      localStorage.setItem("maharashtra_7_12_history_records", JSON.stringify(updated));
       return updated;
     });
   };
 
-  // Callback: edit record
-  const handleUpdateRecord = (id: string, updatedRecord: LandRecord) => {
-    const next = records.map((r) => (r.id === id ? updatedRecord : r));
-    updateCache(next);
+  // Callback: edit record in dashboard
+  const handleUpdateDashboardRecord = (id: string, updatedRecord: LandRecord) => {
+    const next = dashboardRecords.map((r) => (r.id === id ? updatedRecord : r));
+    updateDashboardCache(next);
   };
 
-  // Callback: batch delete records
-  const handleDeleteRecords = (ids: string[]) => {
-    const next = records.filter((r) => !ids.includes(r.id));
-    updateCache(next);
+  // Callback: edit record in history
+  const handleUpdateHistoryRecord = (id: string, updatedRecord: LandRecord) => {
+    const next = historyRecords.map((r) => (r.id === id ? updatedRecord : r));
+    updateHistoryCache(next);
   };
 
-  // Callback: save manual entry
+  // Callback: delete records from dashboard only
+  const handleDeleteDashboardRecords = (ids: string[]) => {
+    const next = dashboardRecords.filter((r) => !ids.includes(r.id));
+    updateDashboardCache(next);
+  };
+
+  // Callback: delete records from history only
+  const handleDeleteHistoryRecords = (ids: string[]) => {
+    const next = historyRecords.filter((r) => !ids.includes(r.id));
+    updateHistoryCache(next);
+  };
+
+  // Callback: save manual entry (goes to both)
   const handleSaveManualRecord = (record: LandRecord) => {
-    updateCache([record, ...records]);
+    updateDashboardCache([record, ...dashboardRecords]);
+    updateHistoryCache([record, ...historyRecords]);
   };
 
   return (
@@ -214,16 +239,16 @@ export default function App() {
                 />
               </div>
               <div className="flex-1 min-w-0">
-                <AnalysisPanel records={records} />
+                <AnalysisPanel records={dashboardRecords} />
               </div>
             </main>
 
             {/* Interactive 31-column Editable Table View */}
             <section id="extraction-spreadsheet-section">
               <RecordsTable
-                records={records}
-                onUpdateRecord={handleUpdateRecord}
-                onDeleteRecords={handleDeleteRecords}
+                records={dashboardRecords}
+                onUpdateRecord={handleUpdateDashboardRecord}
+                onDeleteRecords={handleDeleteDashboardRecords}
                 onAddManualRecord={() => setIsManualOpen(true)}
               />
             </section>
@@ -262,9 +287,9 @@ export default function App() {
 
             <section id="history-spreadsheet-section" className="flex-1">
               <RecordsTable
-                records={records}
-                onUpdateRecord={handleUpdateRecord}
-                onDeleteRecords={handleDeleteRecords}
+                records={historyRecords}
+                onUpdateRecord={handleUpdateHistoryRecord}
+                onDeleteRecords={handleDeleteHistoryRecords}
                 onAddManualRecord={() => setIsManualOpen(true)}
               />
             </section>
