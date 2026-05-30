@@ -495,7 +495,7 @@ export default function RecordsTable({
               <div>
                 <h3 className="text-sm font-semibold text-gray-900 flex items-center gap-1.5">
                   <Edit3 className="w-4 h-4 text-indigo-600" />
-                  Forensic Record Sheet Editor
+                  Record Sheet Editor
                 </h3>
                 <p className="text-[11px] text-gray-500 mt-1">
                   Editing file: <span className="font-mono text-gray-600">{editRecordObj.fileName}</span>
