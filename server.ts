@@ -12,6 +12,7 @@ import { body, validationResult } from "express-validator";
 import { GoogleGenAI } from "@google/genai";
 import { createServer as createViteServer } from "vite";
 import { Storage } from "@google-cloud/storage";
+import { PDFDocument } from "pdf-lib";
 
 dotenv.config();
 
@@ -418,10 +419,21 @@ async function processBatchJob(jobId: string) {
     const requests: { key: string; request: any }[] = [];
 
     for (const file of job.files) {
-      const fileBuffer = await downloadFromGCS(file.gcsInputPath);
+      let fileBuffer = await downloadFromGCS(file.gcsInputPath);
       const mimeType = file.fileName.endsWith(".png") ? "image/png"
         : file.fileName.endsWith(".jpg") || file.fileName.endsWith(".jpeg") ? "image/jpeg"
         : "application/pdf";
+
+      if (mimeType === "application/pdf") {
+        const pdfDoc = await PDFDocument.load(fileBuffer);
+        if (pdfDoc.getPageCount() > 1) {
+          logger.info(`${file.fileName} has ${pdfDoc.getPageCount()} pages — extracting page 1 only`);
+          const [firstPage] = await pdfDoc.copyPages(pdfDoc, [0]);
+          const newPdf = await PDFDocument.create();
+          newPdf.addPage(firstPage);
+          fileBuffer = Buffer.from(await newPdf.save());
+        }
+      }
 
       const safeName = file.fileName.replace(/[^a-zA-Z0-9._-]/g, "_");
       const tempPdfPath = path.join(os.tmpdir(), `${file.id}_${safeName}`);
