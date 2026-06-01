@@ -537,6 +537,11 @@ async function processBatchJob(jobId: string) {
         continue;
       }
 
+      const usage = parsed.response?.usageMetadata;
+      if (usage) {
+        logger.info(`${matchedFile.fileName} — prompt: ${usage.promptTokenCount}, candidates: ${usage.candidatesTokenCount}, total: ${usage.totalTokenCount} tokens`);
+      }
+
       if (parsed.error) {
         logger.warn({ err: parsed.error }, `Error for ${matchedFile.fileName}`);
         matchedFile.status = "failed";
